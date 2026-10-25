@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#050609">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Ghostface: Uno de nosotros miente. Un juego de terror 3D de deducción social para móvil y tablet.">
+<title>GHOSTFACE — Uno de nosotros miente</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzA1MDYwOSIvPjxwYXRoIGQ9Ik0xNiAzYzUuOCAwIDkuNCA0LjUgOS40IDExIDAgNC43LTEuOCA4LjQtNCAxMS40TDIwIDI5bC0yLjQtMi42TDE2IDI5bC0xLjYtMi42TDEyIDI5bC0xLjQtMy42Yy0yLjItMy00LTYuNy00LTExLjRDNi42IDcuNSAxMC4yIDMgMTYgM1oiIGZpbGw9IiNlOWUzZDUiLz48cGF0aCBkPSJNMTEuNCAxMi4zYy45LTEgMi40LTEuMyAzLjUtLjctLjkuNi0xLjcgMS42LTIuMSAyLjctLjEuNC0uNi41LS44LjEtLjQtLjctLjktMS40LS42LTIuMVpNMjAuNiAxMi4zYy0uOS0xLTIuNC0xLjMtMy41LS43LjkuNiAxLjcgMS42IDIuMSAyLjcuMS40LjYuNS44LjEuNC0uNy45LTEuNC42LTIuMVoiIGZpbGw9IiMwNTA2MDkiLz48cGF0aCBkPSJNMTYgMTcuNmMxLjcgMCAzLjEuNyAzLjEgMS41IDAgLjktMS40IDEuNi0zLjEgMS42cy0zLjEtLjctMy4xLTEuNmMwLS44IDEuNC0xLjUgMy4xLTEuNVoiIGZpbGw9IiMwNTA2MDkiLz48L3N2Zz4=">
+<link rel="preload" href="fonts/bebas-neue.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/special-elite.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ SHARED ART ============ -->
+  <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <defs>
+      <linearGradient id="maskFill" x1="0" y1="0" x2="0.9" y2="1">
+        <stop offset="0" stop-color="#f4f0e6"/>
+        <stop offset="0.45" stop-color="#d9d3c6"/>
+        <stop offset="0.75" stop-color="#a9a396"/>
+        <stop offset="1" stop-color="#6f6b61"/>
+      </linearGradient>
+      <radialGradient id="maskLight" cx="0.4" cy="0.28" r="0.7">
+        <stop offset="0" stop-color="#ffffff" stop-opacity="0.62"/>
+        <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.08"/>
+        <stop offset="1" stop-color="#000000" stop-opacity="0.34"/>
+      </radialGradient>
+      <linearGradient id="eyeFill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#030304"/>
+        <stop offset="1" stop-color="#16130f"/>
+      </linearGradient>
+      <filter id="maskNoise" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="n"/>
+        <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+        <feComponentTransfer in="g" result="t">
+          <feFuncA type="linear" slope="0.36"/>
+        </feComponentTransfer>
+        <feComposite in="t" in2="SourceGraphic" operator="in" result="grain"/>
+        <feBlend in="SourceGraphic" in2="grain" mode="multiply"/>
+      </filter>
+      <filter id="maskGlow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="9" result="b"/>
+        <feColorMatrix in="b" type="matrix" values="0 0 0 0 0.82  0 0 0 0 0.84  0 0 0 0 0.88  0 0 0 0.42 0"/>
+        <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <clipPath id="maskClip">
+        <path d="M200 18 C285 18 342 78 344 168 C346 250 312 330 260 398 C237 430 219 455 200 472 C181 455 163 430 140 398 C88 330 54 250 56 168 C58 78 115 18 200 18Z"/>
+      </clipPath>
+
+      <symbol id="mask-symbol" viewBox="0 0 400 500">
+        <g>
+          <path d="M200 22 C285 22 338 82 340 170 C342 250 308 330 258 398 C236 430 218 452 200 469 C182 452 164 430 142 398 C92 330 58 250 60 170 C62 82 115 22 200 22Z" fill="#07080a" opacity="0.9"/>
+          <path d="M200 18 C285 18 342 78 344 168 C346 250 312 330 260 398 C237 430 219 455 200 472 C181 455 163 430 140 398 C88 330 54 250 56 168 C58 78 115 18 200 18Z" fill="url(#maskFill)"/>
+          <g clip-path="url(#maskClip)">
+            <rect x="40" y="0" width="320" height="500" fill="url(#maskLight)"/>
+            <path d="M56 168 C120 210 128 300 104 420 L56 360 Z" fill="#000" opacity="0.22"/>
+            <path d="M344 168 C280 210 272 300 296 420 L344 360 Z" fill="#000" opacity="0.28"/>
+            <path d="M200 250 C224 260 240 342 226 430 C214 450 196 452 184 436 C166 342 178 262 200 250Z" fill="#000" opacity="0.08"/>
+            <path d="M200 42 C180 72 166 104 166 140 C182 132 218 132 234 140 C234 104 220 72 200 42Z" fill="#fff" opacity="0.18"/>
+            <g opacity="0.55" stroke="#4a463e" stroke-width="1.1" fill="none">
+              <path d="M132 206 C138 240 142 264 134 292"/>
+              <path d="M158 198 C164 228 168 246 162 270"/>
+              <path d="M268 206 C262 240 258 264 266 292"/>
+              <path d="M242 198 C236 228 232 246 238 270"/>
+              <path d="M108 344 C128 360 140 384 138 412"/>
+              <path d="M292 344 C272 360 260 384 262 412"/>
+              <path d="M186 124 C196 118 204 118 214 124"/>
+              <path d="M200 300 C208 292 216 292 222 300"/>
+            </g>
+          </g>
+          <path d="M104 176 C128 152 170 158 178 189 C162 216 120 224 100 203 C93 194 96 184 104 176Z" fill="url(#eyeFill)"/>
+          <path d="M296 176 C272 152 230 158 222 189 C238 216 280 224 300 203 C307 194 304 184 296 176Z" fill="url(#eyeFill)"/>
+          <path d="M112 180 C132 166 158 168 169 186" fill="none" stroke="#2c2822" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+          <path d="M288 180 C268 166 242 168 231 186" fill="none" stroke="#2c2822" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+          <circle cx="132" cy="188" r="4.2" fill="#d8d3c5" opacity="0.55"/>
+          <circle cx="268" cy="188" r="4.2" fill="#d8d3c5" opacity="0.55"/>
+          <path d="M186 254 C188 264 184 272 180 278 C186 279 192 274 192 264Z" fill="#14100d"/>
+          <path d="M214 254 C212 264 216 272 220 278 C214 279 208 274 208 264Z" fill="#14100d"/>
+          <path d="M140 316 C170 296 230 296 260 316 C252 372 228 420 200 432 C172 420 148 372 140 316Z" fill="#08080a"/>
+          <path d="M142 314 C172 302 228 302 258 314 C246 330 154 330 142 314Z" fill="#cfc9bb" opacity="0.52"/>
+          <path d="M150 378 C174 392 226 392 250 378 C242 402 222 424 200 431 C178 424 158 402 150 378Z" fill="#6d675c" opacity="0.36"/>
+          <g fill="#c9c2b3" opacity="0.5">
+            <path d="M158 322 l10 2 -8 13 -7 -12Z"/>
+            <path d="M178 322 l10 2 -8 13 -7 -12Z"/>
+            <path d="M198 322 l10 2 -8 13 -7 -12Z"/>
+            <path d="M218 322 l10 2 -8 13 -7 -12Z"/>
+            <path d="M238 323 l8 2 -7 11 -6 -10Z"/>
+          </g>
+          <path d="M150 406 C172 416 228 416 250 406 C240 422 220 431 200 434 C180 431 160 422 150 406Z" fill="#c9c2b3" opacity="0.33"/>
+          <path d="M118 252 C126 260 128 272 124 282" stroke="#3b362f" stroke-width="1.4" fill="none" opacity="0.6"/>
+          <path d="M282 252 C274 260 272 272 276 282" stroke="#3b362f" stroke-width="1.4" fill="none" opacity="0.6"/>
+          <path d="M200 18 C285 18 342 78 344 168 C346 250 312 330 260 398 C237 430 219 455 200 472 C181 455 163 430 140 398 C88 330 54 250 56 168 C58 78 115 18 200 18Z" fill="none" stroke="#16161a" stroke-width="5" opacity="0.7"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <canvas id="scene" aria-label="Escena 3D del campamento"></canvas>
+
+  <div id="grade"></div>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+  <div id="flashRed"></div>
+  <div id="flashWhite"></div>
+  <div id="damage"></div>
+
+  <div id="labels"></div>
+
+  <!-- ============ HUD ============ -->
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <div class="hud-brand">
+        <span class="hud-brand-main">GHOSTFACE</span>
+        <span class="hud-brand-sub">CAMPAMENTO BLACKWOOD · 23:47</span>
+        <div class="tape-slots" id="tapeSlots">
+          <div class="tape-slot" data-slot="0"><span></span></div>
+          <div class="tape-slot" data-slot="1"><span></span></div>
+          <div class="tape-slot" data-slot="2"><span></span></div>
+        </div>
+      </div>
+
+      <div class="hud-objective" id="objectiveWrap">
+        <div class="objective-kicker">OBJETIVO</div>
+        <div class="objective-text" id="objectiveText">Encuentra 3 cintas de vídeo</div>
+        <div class="compass" id="compass">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L17 15 L12 12 L7 15 Z"/></svg>
+          <span id="compassDist">— m</span>
+        </div>
+      </div>
+
+      <div class="hud-actions">
+        <button class="icon-btn" id="rosterBtn" aria-label="Sospechosos">
+          <svg viewBox="0 0 24 24"><path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2.5 19c.7-3 3-4.5 5.5-4.5s4.8 1.5 5.5 4.5M13 14.8c2.3.2 4.4 1.5 5.1 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span>SOSPECHOSOS</span>
+        </button>
+        <button class="icon-btn" id="pauseBtn" aria-label="Pausa">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          <span>PAUSA</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="hud-alert hidden" id="alertBanner"><span></span>ESTÁ CERCA</div>
+
+    <div class="hud-bottom">
+      <div class="move-cluster">
+        <div id="joystick" class="joystick">
+          <div class="joystick-ring"></div>
+          <div class="joystick-knob" id="joystickKnob"></div>
+          <div class="joystick-hint">MOVER</div>
+        </div>
+        <div class="desktop-hint">WASD mover · arrastra para mirar · E usar · F linterna</div>
+      </div>
+
+      <div class="status-cluster">
+        <div class="stamina-wrap" id="staminaWrap">
+          <div class="stamina-label">AGUANTE</div>
+          <div class="stamina-track"><div class="stamina-fill" id="staminaFill"></div></div>
+        </div>
+        <div class="interact-wrap">
+          <div class="interact-prompt hidden" id="interactPrompt"><b>E</b><span id="interactLabel">USAR</span></div>
+          <button class="action-btn interact" id="interactBtn" aria-label="Interactuar">
+            <svg viewBox="0 0 24 24"><path d="M9 11V6.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V12m0-1a1.5 1.5 0 0 1 3 0v5.5c0 3-2 5.5-5.5 5.5h-1c-2 0-3.2-.8-4.3-2.4L5 16.8c-.8-1.2-.4-2.3.6-2.8 1-.5 2 .1 2.7 1.2L9 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="interactBtnLabel">USAR</span>
+            <i class="hold-ring" id="holdRing"></i>
+          </button>
+        </div>
+        <button class="action-btn light" id="lightBtn" aria-label="Linterna">
+          <svg viewBox="0 0 24 24"><path d="M9 3h6v3l-1 2v13h-4V8L9 6V3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 11h4" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>LUZ</span>
+        </button>
+        <button class="action-btn sprint" id="sprintBtn" aria-label="Correr">
+          <svg viewBox="0 0 24 24"><path d="M14 4.5a1.6 1.6 0 1 1-3.2 0 1.6 1.6 0 0 1 3.2 0ZM8.5 21l2.2-5-2.2-2.2V9.5l4-1.6 3 2.3 3 1M10.7 16l3.8-2.2 1.6 3.4L19 21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>CORRER</span>
+        </button>
+      </div>
+    </div>
+
+    <button class="flash-stun hidden" id="stunBtn" aria-label="Destello">
+      <span class="stun-ring" id="stunRing"></span>
+      <svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="currentColor"/></svg>
+      <b>DESTELLO</b>
+    </button>
+
+    <div class="tape-card hidden" id="tapeCard">
+      <div class="tape-card-side"><span>VHS</span><i></i></div>
+      <div class="tape-card-body">
+        <div class="tape-card-kicker">CINTA RECUPERADA <span id="tapeCardNum">01</span></div>
+        <div class="tape-card-title" id="tapeCardTitle">VHS 04 — «No mires atrás»</div>
+        <div class="tape-card-text" id="tapeCardText"></div>
+        <div class="tape-card-trait" id="tapeCardTrait"></div>
+      </div>
+    </div>
+
+    <div class="dialogue hidden" id="dialogue">
+      <div class="dialogue-name" id="dialogueName"></div>
+      <div class="dialogue-text" id="dialogueText"></div>
+    </div>
+
+    <div class="toast" id="toast"><span id="toastText"></span></div>
+
+    <div class="chase-bar hidden" id="chaseBar">
+      <div class="chase-kicker">CORRE HACIA LA SALIDA</div>
+      <div class="chase-dist"><span id="chaseDist">34</span> m</div>
+    </div>
+  </div>
+
+  <!-- ============ TITLE ============ -->
+  <section class="screen active title-screen" id="titleScreen">
+    <div class="title-shade"></div>
+    <div class="title-inner">
+      <div class="title-copy">
+        <div class="eyebrow"><span class="dot"></span> UN JUEGO DE TERROR 3D · MÓVIL / TABLET</div>
+        <h1 class="logo"><span>GHOST</span><span class="red">FACE</span></h1>
+        <div class="tagline">UNO DE NOSOTROS MIENTE</div>
+        <p class="blurb">Cinco monitores. Una noche. Alguien ha traído una máscara.<br>Recoge las cintas, descubre al asesino y no dejes que te alcance.</p>
+        <div class="menu-actions">
+          <button class="btn primary" id="playBtn"><span class="btn-ico">▶</span> JUGAR AHORA</button>
+          <button class="btn ghost" id="howBtn">CÓMO SE JUEGA</button>
+        </div>
+        <div class="menu-foot">
+          <span id="bestTime">MEJOR HUIDA —:—</span>
+          <span class="headphone">MEJOR CON AURICULARES</span>
+        </div>
+      </div>
+      <div class="title-mask">
+        <div class="mask-halo"></div>
+        <svg class="mask-svg" viewBox="0 0 400 500" aria-hidden="true"><use href="#mask-symbol"/></svg>
+        <div class="mask-caption">BLACKWOOD<br><b>23:47</b></div>
+      </div>
+    </div>
+    <div class="corner-note">TOCA PARA ACTIVAR EL SONIDO</div>
+  </section>
+
+  <!-- ============ HOW TO ============ -->
+  <section class="screen how-screen" id="howScreen">
+    <div class="how-inner">
+      <div class="eyebrow"><span class="dot"></span> EXPEDIENTE DEL CAMPAMENTO</div>
+      <h2 class="screen-title">CÓMO SOBREVIVIR</h2>
+      <div class="how-grid">
+        <article>
+          <div class="how-num">01</div>
+          <h3>EXPLORA</h3>
+          <p>Muévete con el joystick. Arrastra el lado derecho de la pantalla para mirar. Mantén <b>CORRER</b> para escapar, pero vigila tu aguante.</p>
+        </article>
+        <article>
+          <div class="how-num">02</div>
+          <h3>RECOGE LAS CINTAS</h3>
+          <p>Hay tres cintas VHS escondidas en el campamento. Acércate y pulsa <b>USAR</b> para analizarlas. Cada una revela un rasgo del asesino.</p>
+        </article>
+        <article>
+          <div class="how-num">03</div>
+          <h3>ACUSA</h3>
+          <p>Vuelve a la radio del campamento y abre el expediente. Compara las pistas con los cuatro sospechosos. Solo uno encaja en las tres.</p>
+        </article>
+        <article class="danger">
+          <div class="how-num">04</div>
+          <h3>NO TE PARES</h3>
+          <p>Si aciertas, Ghostface se revelará y tendrás que alcanzar la camioneta. Usa el <b>DESTELLO</b> de la linterna para frenarlo.</p>
+        </article>
+      </div>
+      <div class="how-controls">
+        <div><span class="key">WASD</span> MOVER</div>
+        <div><span class="key">RATÓN</span> MIRAR</div>
+        <div><span class="key">E</span> USAR</div>
+        <div><span class="key">F</span> LINTERNA</div>
+        <div><span class="key">SHIFT</span> CORRER</div>
+        <div><span class="key">ESC</span> PAUSA</div>
+      </div>
+      <button class="btn ghost" id="howCloseBtn">VOLVER</button>
+    </div>
+  </section>
+
+  <!-- ============ CINEMATIC ============ -->
+  <div class="cinematic hidden" id="cinematic">
+    <div class="cine-lines">
+      <p class="cine-l1">CAMPAMENTO BLACKWOOD</p>
+      <p class="cine-l2">23:47 · ÚLTIMA NOCHE DEL VERANO</p>
+      <p class="cine-l3">Alguien ha encontrado una máscara en el cobertizo.<br>Y alguien no piensa devolverla.</p>
+    </div>
+  </div>
+
+  <!-- ============ ROSTER / ACCUSE ============ -->
+  <section class="screen roster-screen" id="rosterScreen">
+    <div class="roster-inner">
+      <div class="roster-head">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> <span id="rosterKicker">EXPEDIENTE · SOSPECHOSOS</span></div>
+          <h2 class="screen-title" id="rosterTitle">LOS QUE QUEDAN</h2>
+        </div>
+        <button class="icon-btn close" id="rosterCloseBtn" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="dossier" id="dossier">
+        <div class="dossier-title">PERFIL DEL ASESINO <span id="dossierCount">0/3</span></div>
+        <div class="trait-row">
+          <div class="trait locked" data-trait="height"><b>ALTURA</b><span>???</span></div>
+          <div class="trait locked" data-trait="hand"><b>MANO</b><span>???</span></div>
+          <div class="trait locked" data-trait="mark"><b>MARCA</b><span>???</span></div>
+        </div>
+        <p class="dossier-note" id="dossierNote">Las cintas VHS contienen tres rasgos del asesino. Recógelas todas para completar el perfil.</p>
+      </div>
+
+      <div class="suspect-grid" id="suspectGrid"></div>
+
+      <div class="roster-foot">
+        <div class="accuse-hint hidden" id="accuseHint">Solo uno de ellos encaja en los tres rasgos. Elige con cuidado: no hay segunda oportunidad.</div>
+        <div class="roster-buttons">
+          <button class="btn ghost hidden" id="cancelAccuseBtn">CANCELAR</button>
+          <button class="btn primary hidden" id="confirmAccuseBtn" disabled>SEÑALAR AL ASESINO</button>
+          <button class="btn primary" id="rosterDoneBtn">CERRAR EXPEDIENTE</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAUSE ============ -->
+  <section class="screen pause-screen" id="pauseScreen">
+    <div class="pause-inner">
+      <div class="eyebrow"><span class="dot"></span> EL BOSQUE ESPERA</div>
+      <h2 class="screen-title">PAUSA</h2>
+      <div class="pause-actions">
+        <button class="btn primary" id="resumeBtn">CONTINUAR</button>
+        <button class="btn ghost" id="pauseHowBtn">CÓMO SE JUEGA</button>
+        <button class="btn ghost" id="restartBtn">REINICIAR NOCHE</button>
+        <button class="btn danger" id="quitBtn">SALIR AL MENÚ</button>
+      </div>
+      <div class="settings">
+        <label>VOLUMEN <input type="range" id="volumeRange" min="0" max="100" value="80"></label>
+        <label>SENSIBILIDAD <input type="range" id="sensRange" min="40" max="200" value="100"></label>
+        <label>CALIDAD
+          <select id="qualitySelect">
+            <option value="auto">AUTOMÁTICA</option>
+            <option value="high">ALTA</option>
+            <option value="low">BAJA</option>
+          </select>
+        </label>
+      </div>
+      <div class="pause-tip">Consejo: la linterna revela pistas, pero también delata tu posición.</div>
+    </div>
+  </section>
+
+  <!-- ============ END ============ -->
+  <section class="screen end-screen" id="endScreen">
+    <div class="end-mask"><svg viewBox="0 0 400 500" aria-hidden="true"><use href="#mask-symbol"/></svg></div>
+    <div class="end-inner">
+      <div class="eyebrow" id="endKicker">FIN DE LA NOCHE</div>
+      <h2 class="end-title" id="endTitle">ESCAPASTE</h2>
+      <div class="end-verdict" id="endVerdict"></div>
+      <p class="end-text" id="endText"></p>
+      <div class="end-stats" id="endStats"></div>
+      <div class="end-actions">
+        <button class="btn primary" id="retryBtn">JUGAR OTRA VEZ</button>
+        <button class="btn ghost" id="menuBtn">MENÚ PRINCIPAL</button>
+      </div>
+      <div class="end-foot">Blackwood no aparece en los mapas. Ahora ya sabes por qué.</div>
+    </div>
+  </section>
+
+  <!-- ============ JUMPSCARE ============ -->
+  <div class="jumpscare" id="jumpscare" aria-hidden="true">
+    <div class="jumpscare-mask"><svg viewBox="0 0 400 500"><use href="#mask-symbol"/></svg></div>
+    <div class="jumpscare-noise"></div>
+    <div class="jumpscare-red"></div>
+  </div>
+
+  <div class="fade" id="fade"></div>
+  <div class="boot" id="boot">
+    <div class="boot-mask"><svg viewBox="0 0 400 500"><use href="#mask-symbol"/></svg></div>
+    <div class="boot-label">CARGANDO EL CAMPAMENTO</div>
+    <div class="boot-bar"><i></i></div>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
